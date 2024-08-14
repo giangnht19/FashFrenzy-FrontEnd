@@ -102,4 +102,25 @@ pipeline {
             }
         }
     }
+    
+    post {
+        success {
+            script {
+                archiveArtifacts artifacts: '**/*', excludes: ''
+                mail to: "${env.EMAIL_RECIPIENT}",
+                     subject: "${currentBuild.currentResult}",
+                     body: "Build succeeded.",
+                     attachmentsPattern: 'archive/**/*.log'
+            }
+        }
+        failure {
+            script {
+                archiveArtifacts artifacts: '**/*', excludes: ''
+                mail to: "${env.EMAIL_RECIPIENT}",
+                     subject: "${currentBuild.currentResult}",
+                     body: "The build has failed.",
+                     attachmentsPattern: 'archive/**/*.log'
+            }
+        }
+    }
 }
