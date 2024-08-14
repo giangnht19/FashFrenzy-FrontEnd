@@ -108,8 +108,8 @@ pipeline {
             script {
                 archiveArtifacts artifacts: '**/*', excludes: ''
                 mail to: "${env.EMAIL_RECIPIENT}",
-                     subject: "${currentBuild.currentResult}",
-                     body: "Build succeeded.",
+                     subject: "Build Status Email",
+                     body: "${currentBuild.currentResult}",
                      attachmentsPattern: 'archive/**/*.log'
             }
         }
@@ -117,8 +117,8 @@ pipeline {
             script {
                 archiveArtifacts artifacts: '**/*', excludes: ''
                 mail to: "${env.EMAIL_RECIPIENT}",
-                     subject: "${currentBuild.currentResult}",
-                     body: "The build has failed.",
+                     subject: "Build Failed",
+                     body: "${currentBuild.currentResult}",
                      attachmentsPattern: 'archive/**/*.log'
             }
         }
