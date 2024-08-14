@@ -108,7 +108,7 @@ pipeline {
             script {
                 archiveArtifacts artifacts: '**/*', excludes: ''
                 mail to: "${env.EMAIL_RECIPIENT}",
-                     subject: "Build Status Email",
+                     subject: "Build Status",
                      body: "${currentBuild.currentResult}",
                      attachmentsPattern: 'archive/**/*.log'
             }
