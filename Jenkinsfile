@@ -11,22 +11,25 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building the code using Maven'
+                echo 'Stage 1: Build'
+                echo 'Task: Compile and package the code using a build automation tool.'
+                echo 'Tool: Maven'
             }
         }
         
         stage('Unit and Integration Tests') {
             steps {
-                echo 'Running unit tests using JUnit'
-                echo 'Running integration tests using Selenium'
+                echo 'Stage 2: Unit and Integration Tests'
+                echo 'Task: Run unit tests to verify code functionality and integration tests to ensure components work together.'
+                echo 'Tool: JUnit with Maven'
             }
             post {
                 success {
                     script {
                         archiveArtifacts artifacts: '**/*', excludes: ''
                         mail to: "${env.EMAIL_RECIPIENT}",
-                             subject: "Unit and Integration Tests Passed",
-                             body: "Unit and integration tests passed successfully.",
+                             subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
+                             body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}.",
                              attachmentsPattern: 'archive/**/*.log'
                     }
                 }
@@ -44,21 +47,25 @@ pipeline {
         
         stage('Code Analysis') {
             steps {
-                echo 'Analyzing the code using SonarQube'
+                echo 'Stage 3: Code Analysis'
+                echo 'Task: Analyze the code to ensure it meets industry standards.'
+                echo 'Tool: SonarQube'
             }
         }
         
         stage('Security Scan') {
             steps {
-                echo 'Performing security scan using OWASP ZAP'
+                echo 'Stage 4: Security Scan'
+                echo 'Task: Perform a security scan to identify any vulnerabilities in the code.'
+                echo 'Tool: OWASP Dependency Check'
             }
             post {
                 success {
                     script {
                         archiveArtifacts artifacts: '**/*', excludes: ''
                         mail to: "${env.EMAIL_RECIPIENT}",
-                             subject: "Security Scan Passed",
-                             body: "Security scan passed successfully.",
+                             subject: "Jenkins Pipeline: Security Scan Stage - ${currentBuild.currentResult}",
+                             body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}.",
                              attachmentsPattern: 'archive/**/*.log'
                     }
                 }
@@ -76,19 +83,25 @@ pipeline {
         
         stage('Deploy to Staging') {
             steps {
-                echo 'Deploying the application to staging server using Jenkins Deploy Plugin'
+                echo 'Stage 5: Deploy to Staging'
+                echo 'Task: Deploy the application to a staging server for further testing.'
+                echo 'Tool: AWS CLI for EC2 deployment'
             }
         }
         
         stage('Integration Tests on Staging') {
             steps {
-                echo 'Running integration tests on staging environment using Selenium Grid'
+                echo 'Stage 6: Integration Tests on Staging'
+                echo 'Task: Run integration tests in the staging environment to ensure production-like functionality.'
+                echo 'Tool: Selenium for UI tests'
             }
         }
         
         stage('Deploy to Production') {
             steps {
-                echo 'Deploying the application to production server using Jenkins Deploy Plugin'
+                echo 'Stage 7: Deploy to Production'
+                echo 'Task: Deploy the application to the production environment.'
+                echo 'Tool: Kubernetes for container orchestration'
             }
         }
     }
