@@ -2,9 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DIRECTORY_PATH = 'C:\\Users\\gn213\\OneDrive\\Tài liệu\\GitHub\\FashFrenzy-FrontEnd'
-        TESTING_ENVIRONMENT = 'staging'
-        PRODUCTION_ENVIRONMENT = 'Edward Nguyen'  // Replace 'your_name' with your actual name
         EMAIL_RECIPIENT = 'gn601800@gmail.com'
     }
 
@@ -37,8 +34,8 @@ pipeline {
                     script {
                         archiveArtifacts artifacts: '**/*', excludes: ''
                         mail to: "${env.EMAIL_RECIPIENT}",
-                             subject: "Unit and Integration Tests Failed",
-                             body: "Unit and integration tests failed. Please check the Jenkins console output for more details.",
+                             subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
+                             body: "Unit and integration tests failed. ${currentBuild.currentResult}.",
                              attachmentsPattern: 'archive/**/*.log'
                     }
                 }
@@ -73,8 +70,8 @@ pipeline {
                     script {
                         archiveArtifacts artifacts: '**/*', excludes: ''
                         mail to: "${env.EMAIL_RECIPIENT}",
-                             subject: "Security Scan Failed",
-                             body: "Security scan failed. Please check the Jenkins console output for more details.",
+                             subject: "Jenkins Pipeline: Security Scan Stage - ${currentBuild.currentResult}",
+                             body: "Security scan failed. ${currentBuild.currentResult}.",
                              attachmentsPattern: 'archive/**/*.log'
                     }
                 }
@@ -121,7 +118,7 @@ pipeline {
                 archiveArtifacts artifacts: '**/*', excludes: ''
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Build Failed",
-                     body: "The build has failed. Please check the Jenkins console output for more details.",
+                     body: "The build has failed.",
                      attachmentsPattern: 'archive/**/*.log'
             }
         }
