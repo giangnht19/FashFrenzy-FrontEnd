@@ -27,7 +27,7 @@ pipeline {
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
                              body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}.",
-                             attachmentsPattern: 'archive/**/*.log'
+                             attachmentsPattern: '**/*.log'
                     }
                 }
                 failure {
@@ -36,7 +36,7 @@ pipeline {
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
                              body: "Unit and integration tests failed. ${currentBuild.currentResult}.",
-                             attachmentsPattern: 'archive/**/*.log'
+                             attachmentsPattern: '**/*.log'
                     }
                 }
             }
@@ -63,7 +63,7 @@ pipeline {
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Security Scan Stage - ${currentBuild.currentResult}",
                              body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}.",
-                             attachmentsPattern: 'archive/**/*.log'
+                             attachmentsPattern: '**/*.log'
                     }
                 }
                 failure {
@@ -72,7 +72,7 @@ pipeline {
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Security Scan Stage - ${currentBuild.currentResult}",
                              body: "Security scan failed. ${currentBuild.currentResult}.",
-                             attachmentsPattern: 'archive/**/*.log'
+                             attachmentsPattern: '**/*.log'
                     }
                 }
             }
@@ -110,7 +110,7 @@ pipeline {
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Pipeline Status",
                      body: "${currentBuild.currentResult}",
-                     attachmentsPattern: 'archive/**/*.log'
+                     attachmentsPattern: '**/*.log'
             }
         }
         failure {
@@ -119,7 +119,7 @@ pipeline {
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Build Failed",
                      body: "${currentBuild.currentResult}",
-                     attachmentsPattern: 'archive/**/*.log'
+                     attachmentsPattern: '**/*.log'
             }
         }
     }
