@@ -29,11 +29,10 @@ pipeline {
                 always {
                     script {
                         archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
-                        emailext to: "${env.EMAIL_RECIPIENT}",
-                                 subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
-                                 body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}.",
-                                 attachLog: true,
-                                 attachmentsPattern: "${BUILD_LOG_FILE}"
+                        mail to: "${env.EMAIL_RECIPIENT}",
+                             subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
+                             body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}.",
+                             attachments: "${BUILD_LOG_FILE}"
                     }
                 }
             }
@@ -61,11 +60,10 @@ pipeline {
                 always {
                     script {
                         archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
-                        emailext to: "${env.EMAIL_RECIPIENT}",
-                                 subject: "Jenkins Pipeline: Security Scan Stage - ${currentBuild.currentResult}",
-                                 body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}.",
-                                 attachLog: true,
-                                 attachmentsPattern: "${BUILD_LOG_FILE}"
+                        mail to: "${env.EMAIL_RECIPIENT}",
+                             subject: "Jenkins Pipeline: Security Scan Stage - ${currentBuild.currentResult}",
+                             body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}.",
+                             attachments: "${BUILD_LOG_FILE}"
                     }
                 }
             }
@@ -86,4 +84,31 @@ pipeline {
                 script {
                     def integrationTestsOutput = 'Stage 6: Integration Tests on Staging\nRunning integration tests on the staging environment...'
                     echo integrationTestsOutput
-                    writeFile file: "${BUILD_LOG_FILE}", text: integrationTests
+                    writeFile file: "${BUILD_LOG_FILE}", text: integrationTestsOutput, append: true
+                }
+            }
+        }
+        
+        stage('Deploy to Production') {
+            steps {
+                script {
+                    def productionDeployOutput = 'Stage 7: Deploy to Production\nDeploying the application to the production environment...'
+                    echo productionDeployOutput
+                    writeFile file: "${BUILD_LOG_FILE}", text: productionDeployOutput, append: true
+                }
+            }
+        }
+    }
+    
+    post {
+        always {
+            script {
+                archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
+                mail to: "${env.EMAIL_RECIPIENT}",
+                     subject: "Jenkins Pipeline: ${currentBuild.currentResult} - ${env.JOB_NAME}",
+                     body: "The pipeline has completed with status: ${currentBuild.currentResult}.",
+                     attachments: "${BUILD_LOG_FILE}"
+            }
+        }
+    }
+}
