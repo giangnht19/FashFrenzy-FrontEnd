@@ -32,7 +32,7 @@ pipeline {
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
                              body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}.",
-                             attachments: "${BUILD_LOG_FILE}"
+                             attachment: "${BUILD_LOG_FILE}"
                     }
                 }
             }
@@ -63,7 +63,7 @@ pipeline {
                         mail to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Security Scan Stage - ${currentBuild.currentResult}",
                              body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}.",
-                             attachments: "${BUILD_LOG_FILE}"
+                             attachment: "${BUILD_LOG_FILE}"
                     }
                 }
             }
@@ -107,7 +107,7 @@ pipeline {
                 mail to: "${env.EMAIL_RECIPIENT}",
                      subject: "Jenkins Pipeline: ${currentBuild.currentResult} - ${env.JOB_NAME}",
                      body: "The pipeline has completed with status: ${currentBuild.currentResult}.",
-                     attachments: "${BUILD_LOG_FILE}"
+                     attachment: "${BUILD_LOG_FILE}"
             }
         }
     }
