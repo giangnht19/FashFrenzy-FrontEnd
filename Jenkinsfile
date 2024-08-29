@@ -98,9 +98,6 @@ pipeline {
     
     post {
         always {
-            def pipelineOutput = "Pipeline Status: Success"
-            echo pipelineOutput
-            writeFile file : "${BUILD_LOG_FILE}", text: pipelineOutput, append: true
             archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
             emailext attachmentsPattern: "${BUILD_LOG_FILE}",
                      to: "${env.EMAIL_RECIPIENT}",
