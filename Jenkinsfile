@@ -26,7 +26,7 @@ pipeline {
                 }
             }
             post {
-                always {
+                success {
                     archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
                     emailext attachmentsPattern: "${BUILD_LOG_FILE}",
                              to: "${env.EMAIL_RECIPIENT}",
@@ -97,6 +97,11 @@ pipeline {
     }
     
     post {
+        script {
+            def pipelineOutput = "Success"
+            echo pipelineOutput
+            writeFile file : "${BUILD_LOG_FILE}", text: pipelineOutput, append: true
+        }
         always {
             archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
             emailext attachmentsPattern: "${BUILD_LOG_FILE}",
