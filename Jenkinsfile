@@ -27,13 +27,11 @@ pipeline {
             }
             post {
                 always {
-                    script {
-                        archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
-                        mail to: "${env.EMAIL_RECIPIENT}",
+                    archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
+                    emailext attachmentsPattern: "${BUILD_LOG_FILE}",
+                             to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
-                             body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}.",
-                             attachment: "${BUILD_LOG_FILE}"
-                    }
+                             body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}."
                 }
             }
         }
@@ -58,13 +56,11 @@ pipeline {
             }
             post {
                 always {
-                    script {
-                        archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
-                        mail to: "${env.EMAIL_RECIPIENT}",
+                    archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
+                    emailext attachmentsPattern: "${BUILD_LOG_FILE}",
+                             to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Security Scan Stage - ${currentBuild.currentResult}",
-                             body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}.",
-                             attachment: "${BUILD_LOG_FILE}"
-                    }
+                             body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}."
                 }
             }
         }
@@ -102,13 +98,11 @@ pipeline {
     
     post {
         always {
-            script {
-                archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
-                mail to: "${env.EMAIL_RECIPIENT}",
+            archiveArtifacts artifacts: "${BUILD_LOG_FILE}"
+            emailext attachmentsPattern: "${BUILD_LOG_FILE}",
+                     to: "${env.EMAIL_RECIPIENT}",
                      subject: "Jenkins Pipeline: ${currentBuild.currentResult} - ${env.JOB_NAME}",
-                     body: "The pipeline has completed with status: ${currentBuild.currentResult}.",
-                     attachment: "${BUILD_LOG_FILE}"
-            }
+                     body: "The pipeline has completed with status: ${currentBuild.currentResult}."
         }
     }
 }
