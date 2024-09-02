@@ -24,14 +24,14 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts artifacts:  '**/*', excludes: ''
+                    archiveArtifacts artifacts:  '**/*.log',
                     emailext attachmentsPattern: "**/*.log",
                              to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
                              body: "The Unit and Integration Tests stage has completed with status: ${currentBuild.currentResult}."
                 }
                 failure {
-                    archiveArtifacts artifacts:  '**/*', excludes: ''
+                    archiveArtifacts artifacts:  '**/*', 
                     emailext attachmentsPattern: "**/*.log",
                              to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
@@ -58,14 +58,14 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts artifacts:  '**/*', excludes: ''
+                    archiveArtifacts artifacts:  '**/*', 
                     emailext attachmentsPattern: "**/*.log",
                              to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Security Scan Stage - ${currentBuild.currentResult}",
                              body: "The Security Scan stage has completed with status: ${currentBuild.currentResult}."
                 }
                 failure {
-                    archiveArtifacts artifacts:  '**/*', excludes: ''
+                    archiveArtifacts artifacts:  '**/*', 
                     emailext attachmentsPattern: "**/*.log",
                              to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Security Scan Stage - ${currentBuild.currentResult}",
@@ -104,14 +104,14 @@ pipeline {
     
     post {
         success {
-            archiveArtifacts artifacts:  '**/*', excludes: ''
+            archiveArtifacts artifacts:  '**/*', 
             emailext attachmentsPattern: "**/*.log",
                      to: "${env.EMAIL_RECIPIENT}",
                      subject: "Jenkins Pipeline: ${currentBuild.currentResult} - ${env.JOB_NAME}",
                      body: "The pipeline has completed with status: ${currentBuild.currentResult}."
         }
         failure {
-            archiveArtifacts artifacts:  '**/*', excludes: ''
+            archiveArtifacts artifacts:  '**/*', 
             emailext attachmentsPattern: "**/*.log",
                      to: "${env.EMAIL_RECIPIENT}",
                      subject: "Jenkins Pipeline: ${currentBuild.currentResult} - ${env.JOB_NAME}",
