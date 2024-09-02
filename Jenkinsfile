@@ -24,7 +24,7 @@ pipeline {
             }
             post {
                 success {
-                    archiveArtifacts artifacts:  '**/*.log',
+                    archiveArtifacts artifacts:  '**/*',
                     emailext attachmentsPattern: "**/*.log",
                              to: "${env.EMAIL_RECIPIENT}",
                              subject: "Jenkins Pipeline: Unit and Integration Tests Stage - ${currentBuild.currentResult}",
@@ -111,7 +111,7 @@ pipeline {
                      body: "The pipeline has completed with status: ${currentBuild.currentResult}."
         }
         failure {
-            archiveArtifacts artifacts:  '**/*', 
+            archiveArtifacts artifacts:  '**/*',
             emailext attachmentsPattern: "**/*.log",
                      to: "${env.EMAIL_RECIPIENT}",
                      subject: "Jenkins Pipeline: ${currentBuild.currentResult} - ${env.JOB_NAME}",
